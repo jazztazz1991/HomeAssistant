@@ -1,0 +1,25 @@
+{
+  "name": "home-assistant-task-manager",
+  "version": "1.0.0",
+  "description": "Automated task manager with React frontend and Express backend",
+  "scripts": {
+    "install": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-frontend": "cd frontend && npm install",
+    "install-backend": "cd backend && npm install"
+  },
+  "keywords": [
+    "task-manager",
+    "react",
+    "express",
+    "mysql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,22 +1,71 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
-import AddTask from './pages/AddTask';
+import AllTasks from './pages/AllTasks';
+import Statistics from './pages/Statistics';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import './App.css';
+
+// Protected Route wrapper
+function ProtectedRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
+  
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+  
+  return isAuthenticated ? children : <Navigate to="/login" />;
+}
+
+function AppContent() {
+  const { isAuthenticated } = useAuth();
+
+  return (
+    <div className="App">
+      {isAuthenticated && <Navbar />}
+      <div className="content">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/all-tasks" 
+            element={
+              <ProtectedRoute>
+                <AllTasks />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/statistics" 
+            element={
+              <ProtectedRoute>
+                <Statistics />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/add-task" element={<AddTask />} />
-          </Routes>
-        </div>
-      </div>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </Router>
   );
 }
