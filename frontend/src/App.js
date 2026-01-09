@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
-import AllTasks from './pages/AllTasks';
-import Statistics from './pages/Statistics';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Navbar from './components/Navbar/Navbar';
+import Dashboard from './pages/Dashboard/Dashboard';
+import AllTasks from './pages/AllTasks/AllTasks';
+import Statistics from './pages/Statistics/Statistics';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
 import './App.css';
 
 // Protected Route wrapper

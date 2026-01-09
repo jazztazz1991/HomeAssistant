@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import TaskList from '../components/TaskList';
-import TaskModal from '../components/TaskModal';
+import TaskList from '../../components/TaskList/TaskList';
+import TaskModal from '../../components/TaskModal/TaskModal';
+import './Dashboard.css';
 
 function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import TaskItem from '../components/TaskItem';
-import taskService from '../services/taskService';
+import TaskItem from '../../components/TaskItem/TaskItem';
+import taskService from '../../services/taskService';
+import './AllTasks.css';
 
 function AllTasks() {
   const [tasks, setTasks] = useState([]);

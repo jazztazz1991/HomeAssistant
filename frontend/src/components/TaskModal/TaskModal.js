@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import taskService from '../services/taskService';
+import taskService from '../../services/taskService';
+import './TaskModal.css';
 
 function TaskModal({ isOpen, onClose, onTaskAdded }) {
   const [taskData, setTaskData] = useState({

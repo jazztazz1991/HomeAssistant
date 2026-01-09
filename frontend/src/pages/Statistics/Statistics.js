@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import taskService from '../services/taskService';
+import taskService from '../../services/taskService';
+import './Statistics.css';
 
 function Statistics() {
   const [tasks, setTasks] = useState([]);

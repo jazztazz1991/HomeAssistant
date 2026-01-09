@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import taskService from '../services/taskService';
+import taskService from '../../services/taskService';
+import './EditTaskModal.css';
 
 function EditTaskModal({ isOpen, onClose, task, onTaskUpdated }) {
   const [taskData, setTaskData] = useState({

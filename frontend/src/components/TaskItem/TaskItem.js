@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import EditTaskModal from './EditTaskModal';
+import EditTaskModal from '../EditTaskModal/EditTaskModal';
+import './TaskItem.css';
 
 function TaskItem({ task, onComplete, onDelete, onUpdate }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);

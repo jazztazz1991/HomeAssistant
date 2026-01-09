@@ -1,0 +1,147 @@
+.task-list-container {
+  margin-top: 2rem;
+}
+
+.task-filters {
+  display: flex;
+  gap: 0.375rem;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.filter-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.filter-toggle-header {
+  background: white;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.filter-toggle-header:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: #fafafa;
+}
+
+.filter-toggle-header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.filter-summary {
+  font-size: 0.75rem;
+  color: #666;
+  background: #f0f0f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.filter-group {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.filter-group h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-group .task-filters {
+  margin-bottom: 0;
+}
+
+.task-filters button {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.task-filters button:hover {
+  border-color: #282c34;
+}
+
+.task-filters button.active {
+  background-color: #282c34;
+  color: white;
+  border-color: #282c34;
+}
+
+.task-filters button.filter-green.active {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.task-filters button.filter-yellow.active {
+  background-color: #FFC107;
+  border-color: #FFC107;
+  color: #000;
+}
+
+.task-filters button.filter-red.active {
+  background-color: #f44336;
+  border-color: #f44336;
+}
+
+.task-filters button.filter-category {
+  transition: all 0.3s ease;
+}
+
+.task-filters button.filter-category:hover {
+  transform: scale(1.05);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.no-tasks {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.error button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
