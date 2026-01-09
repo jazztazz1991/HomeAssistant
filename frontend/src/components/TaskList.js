@@ -8,6 +8,9 @@ function TaskList() {
   const [error, setError] = useState(null);
   const [urgencyFilter, setUrgencyFilter] = useState('all'); // all, green, yellow, red
   const [categoryFilter, setCategoryFilter] = useState('all'); // all, household, work, health, personal, finance, education, social, general
+  const [timelineFilter, setTimelineFilter] = useState('all'); // all, daily, weekly, monthly, yearly
+  const [sortBy, setSortBy] = useState('urgency'); // urgency, due_date, completion_rate
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const categories = [
     { value: 'household', label: 'Household', color: '#FF6B6B', icon: '🏠' },
@@ -80,7 +83,7 @@ function TaskList() {
     }
   };
 
-  const getFilteredTasks = () => {
+  const getFilteredAndSortedTasks = () => {
     // Filter for due tasks (next_due_date is in the past or today)
     let filteredTasks = tasks.filter(task => 
       new Date(task.next_due_date) <= new Date()
@@ -96,10 +99,33 @@ function TaskList() {
       filteredTasks = filteredTasks.filter(task => task.category === categoryFilter);
     }
     
-    return filteredTasks;
+    // Apply timeline filter
+    if (timelineFilter !== 'all') {
+      filteredTasks = filteredTasks.filter(task => task.repeat_timeline === timelineFilter);
+    }
+    
+    // Apply sorting
+    const sortedTasks = [...filteredTasks].sort((a, b) => {
+      if (sortBy === 'urgency') {
+        // Red > Yellow > Green > Overdue
+        const urgencyOrder = { 'red': 0, 'yellow': 1, 'green': 2, 'overdue': 3 };
+        return urgencyOrder[a.urgency_color] - urgencyOrder[b.urgency_color];
+      } else if (sortBy === 'due_date') {
+        // Earliest due date first (next_due_date + due_within_days)
+        const aDueDate = new Date(a.next_due_date).getTime() + (a.due_within_days * 24 * 60 * 60 * 1000);
+        const bDueDate = new Date(b.next_due_date).getTime() + (b.due_within_days * 24 * 60 * 60 * 1000);
+        return aDueDate - bDueDate;
+      } else if (sortBy === 'completion_rate') {
+        // Higher completion count first
+        return (b.times_completed || 0) - (a.times_completed || 0);
+      }
+      return 0;
+    });
+    
+    return sortedTasks;
   };
 
-  const filteredTasks = getFilteredTasks();
+  const filteredTasks = getFilteredAndSortedTasks();
 
   if (loading) {
     return <div className="loading">Loading tasks...</div>;
@@ -116,8 +142,20 @@ function TaskList() {
 
   return (
     <div className="task-list-container">
-      <div className="filter-section">
-        <div className="filter-group">
+      <div className="filter-toggle-header" onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
+        <h3>
+          {isFilterExpanded ? '▼' : '▶'} Filters & Sorting
+        </h3>
+        <span className="filter-summary">
+          {urgencyFilter !== 'all' || categoryFilter !== 'all' || timelineFilter !== 'all' || sortBy !== 'urgency'
+            ? 'Active'
+            : 'Click to expand'}
+        </span>
+      </div>
+      
+      {isFilterExpanded && (
+        <div className="filter-section">
+          <div className="filter-group">
           <h3>Filter by Urgency</h3>
           <div className="task-filters">
             <button 
@@ -172,7 +210,68 @@ function TaskList() {
             ))}
           </div>
         </div>
+
+        <div className="filter-group">
+          <h3>Filter by Timeline</h3>
+          <div className="task-filters">
+            <button 
+              className={timelineFilter === 'all' ? 'active' : ''} 
+              onClick={() => setTimelineFilter('all')}
+            >
+              All Timelines
+            </button>
+            <button 
+              className={timelineFilter === 'daily' ? 'active' : ''} 
+              onClick={() => setTimelineFilter('daily')}
+            >
+              📅 Daily
+            </button>
+            <button 
+              className={timelineFilter === 'weekly' ? 'active' : ''} 
+              onClick={() => setTimelineFilter('weekly')}
+            >
+              📆 Weekly
+            </button>
+            <button 
+              className={timelineFilter === 'monthly' ? 'active' : ''} 
+              onClick={() => setTimelineFilter('monthly')}
+            >
+              🗓️ Monthly
+            </button>
+            <button 
+              className={timelineFilter === 'yearly' ? 'active' : ''} 
+              onClick={() => setTimelineFilter('yearly')}
+            >
+              📖 Yearly
+            </button>
+          </div>
+        </div>
+
+        <div className="filter-group">
+          <h3>Sort By</h3>
+          <div className="task-filters">
+            <button 
+              className={sortBy === 'urgency' ? 'active' : ''} 
+              onClick={() => setSortBy('urgency')}
+            >
+              🚨 Urgency
+            </button>
+            <button 
+              className={sortBy === 'due_date' ? 'active' : ''} 
+              onClick={() => setSortBy('due_date')}
+            >
+              📅 Due Date
+            </button>
+            <button 
+              className={sortBy === 'completion_rate' ? 'active' : ''} 
+              onClick={() => setSortBy('completion_rate')}
+            >
+              ✓ Completion Rate
+            </button>
+          </div>
+        </div>
       </div>
+      )}
 
       {filteredTasks.length === 0 ? (
         <div className="no-tasks">
