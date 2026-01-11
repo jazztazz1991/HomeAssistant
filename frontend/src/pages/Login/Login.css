@@ -7,17 +7,17 @@
 }
 
 .auth-box {
-  background: white;
+  background: var(--card-bg);
   padding: 2.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-md);
   max-width: 400px;
   width: 100%;
 }
 
 .auth-box h2 {
   margin-bottom: 1.5rem;
-  color: #282c34;
+  color: var(--text-primary);
   text-align: center;
 }
 
@@ -29,16 +29,18 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .form-group input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
+  background: var(--input-bg);
+  color: var(--text-primary);
 }
 
 .form-group input:focus {
@@ -70,13 +72,85 @@
 .auth-switch {
   text-align: center;
   margin-top: 1.5rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .auth-switch a {
   color: #4CAF50;
   text-decoration: none;
   font-weight: bold;
+}
+
+/* Password input wrapper */
+.password-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.password-input-wrapper input {
+  flex: 1;
+}
+
+.password-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.35rem;
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.8;
+  flex-shrink: 0;
+  line-height: 1;
+  max-width: 2rem;
+}
+
+.password-toggle-btn:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--hover-bg);
+}
+
+.password-toggle-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+/* Mobile-friendly styles */
+@media (max-width: 768px) {
+  .password-input-wrapper {
+    gap: 0.3rem;
+  }
+  
+  .password-toggle-btn {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.2rem;
+  }
+  
+  .auth-container {
+    padding: 1rem;
+  }
+  
+  .auth-box {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .password-input-wrapper {
+    gap: 0.25rem;
+  }
+  
+  .password-toggle-btn {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.15rem;
+  }
 }
 
 .error-message {

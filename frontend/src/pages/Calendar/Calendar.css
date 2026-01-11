@@ -513,18 +513,78 @@
   background: #45a049;
 }
 
+@media (max-width: 1024px) {
+  .calendar-page {
+    padding: 0 1rem;
+  }
+
+  .calendar-content-wrapper:has(.selected-date-tasks) {
+    grid-template-columns: 1fr 350px;
+  }
+
+  .week-task-row {
+    min-height: 50px;
+  }
+
+  .week-task-title {
+    font-size: 12px;
+  }
+
+  .week-task-timeline {
+    font-size: 10px;
+  }
+}
+
 @media (max-width: 768px) {
+  .calendar-page {
+    padding: 0;
+  }
+
+  .page-header {
+    padding: 0 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .calendar-controls {
     flex-direction: column;
     align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
   }
 
-  .calendar-nav, .view-toggle {
+  .calendar-nav {
     justify-content: center;
+    order: 2;
   }
 
   .calendar-title {
     text-align: center;
+    order: 1;
+  }
+
+  .calendar-title h2 {
+    font-size: 1.25rem;
+  }
+
+  .view-toggle-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    order: 3;
+  }
+
+  .view-toggle {
+    width: 100%;
+  }
+
+  .view-toggle button {
+    flex: 1;
+  }
+
+  .add-task-btn {
+    width: 100%;
   }
 
   .calendar-content-wrapper:has(.selected-date-tasks) {
@@ -542,12 +602,133 @@
     border-radius: 0;
   }
 
-  .week-grid {
-    grid-template-columns: 1fr;
+  .calendar-grid {
+    border-radius: 0;
   }
 
   .calendar-day {
     min-height: 80px;
+    padding: 0.5rem;
+  }
+
+  .day-number {
+    font-size: 0.875rem;
+  }
+
+  .task-indicators {
+    gap: 0.15rem;
+  }
+
+  .task-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Week view mobile */
+  .week-grid {
+    border-radius: 0;
+  }
+
+  .week-header {
+    gap: 0;
+  }
+
+  .week-header-day {
+    padding: 0.5rem;
+  }
+
+  .week-day-name {
+    font-size: 10px;
+  }
+
+  .week-day-date {
+    font-size: 18px;
+  }
+
+  .week-task-row {
+    padding: 0 2px;
+    min-height: 35px;
+  }
+
+  .week-task-bar {
+    padding: 6px 8px;
+    margin: 1px 0;
+  }
+
+  .week-task-title {
+    font-size: 11px;
+  }
+
+  .week-task-timeline {
+    display: none;
+  }
+
+  /* Modal mobile */
+  .modal-content {
+    width: 95%;
+    max-height: 95vh;
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .task-form {
+    padding: 1rem;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .calendar-title h2 {
+    font-size: 1rem;
+  }
+
+  .nav-btn, .today-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .calendar-day {
+    min-height: 60px;
+    padding: 0.35rem;
+  }
+
+  .day-number {
+    font-size: 0.75rem;
+  }
+
+  .week-day-name {
+    font-size: 8px;
+  }
+
+  .week-day-date {
+    font-size: 14px;
+  }
+
+  .week-task-bar {
+    padding: 4px 6px;
+  }
+
+  .week-task-title {
+    font-size: 10px;
   }
 }
 

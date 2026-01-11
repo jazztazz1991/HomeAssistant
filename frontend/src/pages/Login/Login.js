@@ -5,11 +5,12 @@ import './Login.css';
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -27,10 +28,12 @@ function Login() {
     setLoading(true);
 
     try {
-      await login(formData.email, formData.password);
+      await login(formData.username, formData.password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to login');
+      console.log('Login error details:', err);
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to login';
+      setError(errorMessage);
       console.error('Login error:', err);
     } finally {
       setLoading(false);
@@ -46,11 +49,11 @@ function Login() {
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email:</label>
+            <label>Username:</label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
               disabled={loading}
@@ -59,14 +62,25 @@ function Login() {
           
           <div className="form-group">
             <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            />
+            <div className="password-input-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                disabled={loading}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? '👁️' : '👁️‍🗨️'}
+              </button>
+            </div>
           </div>
           
           <button type="submit" disabled={loading}>

@@ -48,23 +48,28 @@ router.post('/register', async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
+    
+    console.log('Login attempt:', { username, hasPassword: !!password });
 
     // Validate input
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Please provide email and password' });
+    if (!username || !password) {
+      console.log('Missing credentials');
+      return res.status(400).json({ message: 'Please provide username and password' });
     }
 
     // Find user
-    const user = await User.findByEmail(email);
+    const user = await User.findByUsername(username);
+    console.log('User found:', !!user);
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: `Username '${username}' not found` });
     }
 
     // Verify password
     const isValidPassword = await User.verifyPassword(password, user.password);
+    console.log('Password valid:', isValidPassword);
     if (!isValidPassword) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Password is incorrect' });
     }
 
     // Generate JWT token

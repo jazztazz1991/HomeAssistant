@@ -146,3 +146,86 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Responsive TaskList styles */
+@media (max-width: 1024px) {
+  .filter-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-toggle-header {
+    padding: 0.65rem 0.85rem;
+  }
+
+  .filter-toggle-header h3 {
+    font-size: 0.85rem;
+  }
+
+  .filter-summary {
+    font-size: 0.7rem;
+  }
+
+  .filter-section {
+    gap: 0.6rem;
+  }
+
+  .filter-group {
+    padding: 0.6rem;
+  }
+
+  .filter-group h3 {
+    font-size: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .task-filters {
+    gap: 0.3rem;
+  }
+
+  .task-filters button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .task-list {
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-toggle-header {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .filter-toggle-header h3 {
+    font-size: 0.8rem;
+  }
+
+  .filter-summary {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .filter-group {
+    padding: 0.5rem;
+  }
+
+  .filter-group h3 {
+    font-size: 0.7rem;
+  }
+
+  .task-filters {
+    gap: 0.25rem;
+  }
+
+  .task-filters button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .task-list {
+    gap: 0.6rem;
+  }
+}
