@@ -19,6 +19,7 @@ function Navbar() {
         <div style={styles.navLinks}>
           <Link to="/" style={styles.navLink}>Dashboard</Link>
           <Link to="/all-tasks" style={styles.navLink}>All Tasks</Link>
+          <Link to="/calendar" style={styles.navLink}>Calendar</Link>
           <Link to="/statistics" style={styles.navLink}>Statistics</Link>
         </div>
         <span style={styles.username}>Welcome, {user?.username}!</span>
