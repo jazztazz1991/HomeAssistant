@@ -1,6 +1,10 @@
 .all-tasks-page {
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-sm);
 }
 
 .page-header {
@@ -9,29 +13,39 @@
 
 .page-header h1 {
   margin: 0 0 0.5rem 0;
-  color: #282c34;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .page-header h1 {
+  color: #ffffff;
 }
 
 .page-description {
   margin: 0;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1rem;
+}
+
+[data-theme="dark"] .page-description {
+  color: #c0c0c0;
 }
 
 .no-tasks {
   text-align: center;
   padding: 3rem;
-  color: #666;
-  background: white;
+  color: var(--text-secondary);
+  background: var(--card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px var(--shadow-sm);
 }
 
 .loading,
 .error {
   text-align: center;
   padding: 2rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .error button {

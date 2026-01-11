@@ -9,20 +9,30 @@
 
 .page-header h1 {
   margin: 0 0 0.5rem 0;
-  color: #282c34;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .page-header h1 {
+  color: #ffffff;
 }
 
 .page-description {
   margin: 0;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1rem;
 }
 
+[data-theme="dark"] .page-description {
+  color: #c0c0c0;
+}
+
 .calendar-controls {
-  background: white;
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px var(--shadow-sm);
   margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -38,8 +48,9 @@
 
 .nav-btn, .today-btn {
   padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  background: white;
+  border: 1px solid var(--border-light);
+  background: var(--card-bg);
+  color: var(--text-primary);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
@@ -47,7 +58,7 @@
 }
 
 .nav-btn:hover, .today-btn:hover {
-  background: #f5f5f5;
+  background: var(--hover-bg);
   border-color: #4CAF50;
 }
 
@@ -63,14 +74,14 @@
 
 .calendar-title h2 {
   margin: 0;
-  color: #282c34;
+  color: var(--text-primary);
   font-size: 1.5rem;
 }
 
 .view-toggle {
   display: flex;
   gap: 0;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-light);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -78,10 +89,11 @@
 .view-toggle button {
   padding: 0.5rem 1rem;
   border: none;
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--border-light);
 }
 
 .view-toggle button:last-child {
@@ -94,7 +106,7 @@
 }
 
 .view-toggle button:hover:not(.active) {
-  background: #f5f5f5;
+  background: var(--hover-bg);
 }
 
 .calendar-content-wrapper {
@@ -109,24 +121,24 @@
 }
 
 .calendar-grid {
-  background: white;
+  background: var(--card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px var(--shadow-sm);
   overflow: hidden;
 }
 
 .calendar-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background: #f5f5f5;
-  border-bottom: 2px solid #e0e0e0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .calendar-header-day {
   padding: 1rem;
   text-align: center;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -136,11 +148,11 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 1px;
-  background: #e0e0e0;
+  background: var(--border-color);
 }
 
 .calendar-day {
-  background: white;
+  background: var(--card-bg);
   min-height: 120px;
   padding: 0.75rem;
   cursor: pointer;
@@ -149,15 +161,15 @@
 }
 
 .calendar-day.empty {
-  background: #fafafa;
+  background: var(--bg-tertiary);
   cursor: default;
 }
 
 .calendar-day:not(.empty):hover {
-  background: #f9f9f9;
+  background: var(--hover-bg);
   transform: scale(1.02);
   z-index: 1;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px var(--shadow-sm);
 }
 
 .calendar-day.today {
@@ -165,17 +177,30 @@
   border: 2px solid #4CAF50;
 }
 
+[data-theme="dark"] .calendar-day.today {
+  background: rgba(76, 175, 80, 0.15);
+  border: 2px solid #4CAF50;
+}
+
 .calendar-day.has-tasks {
-  background: #fff9f0;
+  background: rgba(255, 193, 7, 0.1);
+}
+
+[data-theme="dark"] .calendar-day.has-tasks {
+  background: rgba(255, 193, 7, 0.08);
 }
 
 .calendar-day.today.has-tasks {
-  background: #e1f5e1;
+  background: rgba(76, 175, 80, 0.2);
+}
+
+[data-theme="dark"] .calendar-day.today.has-tasks {
+  background: rgba(76, 175, 80, 0.2);
 }
 
 .day-number {
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
   font-size: 1rem;
 }
@@ -217,7 +242,7 @@
 
 .task-count {
   font-size: 0.7rem;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 500;
   padding: 0 0.25rem;
 }
@@ -226,10 +251,10 @@
 .week-grid {
   display: flex;
   flex-direction: column;
-  border: 1px solid #e0e0e0;
-  background-color: white;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px var(--shadow-sm);
   overflow: hidden;
   min-height: 500px;
 }
@@ -238,12 +263,12 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 1px;
-  background-color: #e0e0e0;
-  border-bottom: 2px solid #e0e0e0;
+  background-color: var(--border-color);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .week-header-day {
-  background-color: white;
+  background-color: var(--card-bg);
   text-align: center;
   padding: 10px;
 }
@@ -255,7 +280,7 @@
 
 .week-day-name {
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -268,7 +293,7 @@
 .week-day-date {
   font-size: 24px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-top: 5px;
 }
 
@@ -396,9 +421,9 @@
 
 /* Selected Date Tasks */
 .selected-date-tasks {
-  background: white;
+  background: var(--card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px var(--shadow-md);
   overflow: hidden;
   position: sticky;
   top: 1rem;
@@ -415,6 +440,13 @@
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+}
+
+.selected-date-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .selected-date-header h3 {
@@ -455,7 +487,7 @@
 
 .no-tasks-message {
   text-align: center;
-  color: #999;
+  color: var(--text-tertiary);
   padding: 2rem;
   font-style: italic;
 }
@@ -544,9 +576,9 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 32px var(--shadow-lg);
   max-width: 500px;
   width: 90%;
   max-height: 90vh;
@@ -570,12 +602,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .modal-header h2 {
   margin: 0;
-  color: #282c34;
+  color: var(--text-primary);
   font-size: 1.5rem;
 }
 
@@ -590,7 +622,7 @@
 .form-group label {
   display: block;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
 }
@@ -600,7 +632,9 @@
 .form-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-light);
+  background: var(--input-bg);
+  color: var(--text-primary);
   border-radius: 6px;
   font-size: 0.95rem;
   transition: all 0.2s;
@@ -623,7 +657,7 @@
 .form-group small {
   display: block;
   margin-top: 0.5rem;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
@@ -632,7 +666,7 @@
   gap: 1rem;
   justify-content: flex-end;
   padding-top: 1rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--border-color);
 }
 
 .cancel-btn,
@@ -647,12 +681,12 @@
 }
 
 .cancel-btn {
-  background: #f5f5f5;
-  color: #666;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .cancel-btn:hover {
-  background: #e0e0e0;
+  background: var(--border-color);
 }
 
 .submit-btn {

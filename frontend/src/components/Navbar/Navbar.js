@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import './Navbar.css';
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -25,6 +27,9 @@ function Navbar() {
         <span style={styles.username}>Welcome, {user?.username}!</span>
       </div>
       <div style={styles.links}>
+        <button onClick={toggleTheme} style={styles.themeBtn} title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
         <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
       </div>
     </nav>
@@ -68,8 +73,23 @@ const styles = {
   },
   links: {
     display: 'flex',
-    gap: '1.5rem',
+    gap: '1rem',
     alignItems: 'center'
+  },
+  themeBtn: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    border: '2px solid rgba(255, 255, 255, 0.2)',
+    padding: '0.5rem 0.75rem',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    fontSize: '1.2rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.3s',
+    width: '40px',
+    height: '40px'
   },
   logoutBtn: {
     backgroundColor: '#f44336',
