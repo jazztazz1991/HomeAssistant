@@ -1,0 +1,211 @@
+.today-page {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-sm);
+}
+
+.today-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.today-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 2.5rem;
+}
+
+.today-date {
+  margin: 0.5rem 0 0 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.btn-add-task {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-add-task:hover {
+  background-color: #45a049;
+}
+
+.today-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card.overdue {
+  border-color: #f44336;
+}
+
+.stat-card.due-today {
+  border-color: #ff9800;
+}
+
+.stat-card.completed {
+  border-color: #4CAF50;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-card.overdue .stat-number {
+  color: #f44336;
+}
+
+.stat-card.due-today .stat-number {
+  color: #ff9800;
+}
+
+.stat-card.completed .stat-number {
+  color: #4CAF50;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.today-tasks {
+  margin-top: 2rem;
+}
+
+.today-tasks h2 {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Responsive Today styles */
+@media (max-width: 1024px) {
+  .today-page {
+    padding: 1.5rem;
+  }
+
+  .today-header h1 {
+    font-size: 2rem;
+  }
+
+  .today-stats {
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .today-page {
+    padding: 1rem;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .today-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .today-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .today-date {
+    font-size: 0.9rem;
+  }
+
+  .btn-add-task {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .today-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 1.75rem;
+  }
+
+  .today-tasks h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .today-page {
+    padding: 0.75rem;
+  }
+
+  .today-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .today-date {
+    font-size: 0.85rem;
+  }
+
+  .btn-add-task {
+    padding: 0.65rem;
+    font-size: 0.9rem;
+  }
+
+  .stat-card {
+    padding: 0.875rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+  }
+}

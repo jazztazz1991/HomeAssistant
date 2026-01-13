@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar/Navbar';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Today from './pages/Today/Today';
 import AllTasks from './pages/AllTasks/AllTasks';
 import Calendar from './pages/Calendar/Calendar';
 import Statistics from './pages/Statistics/Statistics';
+import Settings from './pages/Settings/Settings';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import './App.css';
@@ -36,7 +37,7 @@ function AppContent() {
             path="/" 
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Today />
               </ProtectedRoute>
             } 
           />
@@ -61,6 +62,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <Statistics />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/settings" 
+            element={
+              <ProtectedRoute>
+                <Settings />
               </ProtectedRoute>
             } 
           />
