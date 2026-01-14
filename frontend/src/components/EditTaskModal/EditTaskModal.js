@@ -11,6 +11,8 @@ function EditTaskModal({ isOpen, onClose, task, onTaskUpdated }) {
     repeat_timeline: 'daily',
     due_within_days: 1
   });
+  const [subtasks, setSubtasks] = useState([]);
+  const [newSubtaskTitle, setNewSubtaskTitle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -34,8 +36,19 @@ function EditTaskModal({ isOpen, onClose, task, onTaskUpdated }) {
         repeat_timeline: task.repeat_timeline || 'daily',
         due_within_days: task.due_within_days || 1
       });
+      loadSubtasks();
     }
   }, [task, isOpen]);
+
+  const loadSubtasks = async () => {
+    if (!task?.task_id) return;
+    try {
+      const data = await taskService.getSubtasks(task.task_id);
+      setSubtasks(data);
+    } catch (error) {
+      console.error('Error loading subtasks:', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +73,37 @@ function EditTaskModal({ isOpen, onClose, task, onTaskUpdated }) {
       ...taskData,
       [e.target.name]: value
     });
+  };
+
+  const handleAddSubtask = async () => {
+    if (!newSubtaskTitle.trim() || !task?.task_id) return;
+    
+    try {
+      await taskService.createSubtask(task.task_id, {
+        title: newSubtaskTitle.trim(),
+        position: subtasks.length
+      });
+      setNewSubtaskTitle('');
+      loadSubtasks();
+    } catch (error) {
+      console.error('Error adding subtask:', error);
+    }
+  };
+
+  const handleRemoveSubtask = async (subtaskId) => {
+    try {
+      await taskService.deleteSubtask(subtaskId);
+      loadSubtasks();
+    } catch (error) {
+      console.error('Error removing subtask:', error);
+    }
+  };
+
+  const handleSubtaskKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleAddSubtask();
+    }
   };
 
   if (!isOpen) return null;
@@ -149,6 +193,45 @@ function EditTaskModal({ isOpen, onClose, task, onTaskUpdated }) {
               disabled={loading}
             />
             <small>How many days you have to complete the task once it appears</small>
+          </div>
+
+          <div className="form-group">
+            <label>Subtasks:</label>
+            <div className="subtask-input-row">
+              <input
+                type="text"
+                value={newSubtaskTitle}
+                onChange={(e) => setNewSubtaskTitle(e.target.value)}
+                onKeyPress={handleSubtaskKeyPress}
+                placeholder="Add a subtask..."
+                disabled={loading}
+              />
+              <button
+                type="button"
+                onClick={handleAddSubtask}
+                className="btn-add-subtask"
+                disabled={loading || !newSubtaskTitle.trim()}
+              >
+                + Add
+              </button>
+            </div>
+            {subtasks.length > 0 && (
+              <ul className="subtask-list">
+                {subtasks.map((subtask) => (
+                  <li key={subtask.subtask_id} className="subtask-item">
+                    <span className="subtask-text">{subtask.title}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveSubtask(subtask.subtask_id)}
+                      className="btn-remove-subtask"
+                      disabled={loading}
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="modal-actions">

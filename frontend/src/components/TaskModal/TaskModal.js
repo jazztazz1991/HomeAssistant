@@ -11,6 +11,8 @@ function TaskModal({ isOpen, onClose, onTaskAdded }) {
     repeat_timeline: 'daily',
     due_within_days: 1
   });
+  const [subtasks, setSubtasks] = useState([]);
+  const [newSubtaskTitle, setNewSubtaskTitle] = useState('');
   const [testMode, setTestMode] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,7 +42,28 @@ function TaskModal({ isOpen, onClose, onTaskAdded }) {
       
       console.log('Sending task data:', dataToSend);
       
-      await taskService.createTask(dataToSend);
+      const response = await taskService.createTask(dataToSend);
+      const newTaskId = response.task?.task_id;
+
+      console.log('Task created with ID:', newTaskId);
+      console.log('Subtasks to create:', subtasks);
+
+      // Create subtasks if any
+      if (subtasks.length > 0 && newTaskId) {
+        console.log(`Creating ${subtasks.length} subtasks for task ${newTaskId}`);
+        for (let i = 0; i < subtasks.length; i++) {
+          const subtaskData = {
+            title: subtasks[i],
+            position: i
+          };
+          console.log('Creating subtask:', subtaskData);
+          const createdSubtask = await taskService.createSubtask(newTaskId, subtaskData);
+          console.log('Subtask created:', createdSubtask);
+        }
+      } else {
+        console.log('No subtasks to create or missing task ID');
+      }
+
       setTaskData({
         title: '',
         details: '',
@@ -48,6 +71,8 @@ function TaskModal({ isOpen, onClose, onTaskAdded }) {
         repeat_timeline: 'daily',
         due_within_days: 1
       });
+      setSubtasks([]);
+      setNewSubtaskTitle('');
       setTestMode(false);
       setStartDate('');
       onTaskAdded();
@@ -57,6 +82,24 @@ function TaskModal({ isOpen, onClose, onTaskAdded }) {
       console.error('Create task error:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddSubtask = () => {
+    if (newSubtaskTitle.trim()) {
+      setSubtasks([...subtasks, newSubtaskTitle.trim()]);
+      setNewSubtaskTitle('');
+    }
+  };
+
+  const handleRemoveSubtask = (index) => {
+    setSubtasks(subtasks.filter((_, i) => i !== index));
+  };
+
+  const handleSubtaskKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleAddSubtask();
     }
   };
 
@@ -155,6 +198,47 @@ function TaskModal({ isOpen, onClose, onTaskAdded }) {
               disabled={loading}
             />
             <small>How many days you have to complete the task once it appears</small>
+          </div>
+
+          <div className="form-group">
+            <label>Subtasks (Optional):</label>
+            <div className="subtasks-section">
+              <div className="subtask-input-row">
+                <input
+                  type="text"
+                  value={newSubtaskTitle}
+                  onChange={(e) => setNewSubtaskTitle(e.target.value)}
+                  onKeyPress={handleSubtaskKeyPress}
+                  placeholder="Add a subtask..."
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddSubtask}
+                  className="btn-add-subtask"
+                  disabled={loading || !newSubtaskTitle.trim()}
+                >
+                  + Add
+                </button>
+              </div>
+              {subtasks.length > 0 && (
+                <ul className="subtask-list">
+                  {subtasks.map((subtask, index) => (
+                    <li key={index} className="subtask-item">
+                      <span>☐ {subtask}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSubtask(index)}
+                        className="btn-remove-subtask"
+                        disabled={loading}
+                      >
+                        ×
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
 
           <div className="form-group test-mode-section">

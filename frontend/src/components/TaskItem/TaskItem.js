@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EditTaskModal from '../EditTaskModal/EditTaskModal';
+import taskService from '../../services/taskService';
 import './TaskItem.css';
 
 function TaskItem({ task, onComplete, onDelete, onUpdate }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [subtasks, setSubtasks] = useState([]);
+  const [showSubtasks, setShowSubtasks] = useState(false);
+  const [loadingSubtasks, setLoadingSubtasks] = useState(false);
   
   const categories = {
     household: { label: 'Household', color: '#FF6B6B', icon: '🏠' },
@@ -117,6 +121,45 @@ function TaskItem({ task, onComplete, onDelete, onUpdate }) {
     return colors[task.urgency_color] || colors.green;
   };
 
+  useEffect(() => {
+    // Load subtasks count initially
+    loadSubtasks();
+  }, [task.task_id]);
+
+  useEffect(() => {
+    if (showSubtasks && subtasks.length === 0) {
+      loadSubtasks();
+    }
+  }, [showSubtasks]);
+
+  const loadSubtasks = async () => {
+    setLoadingSubtasks(true);
+    try {
+      const data = await taskService.getSubtasks(task.task_id);
+      console.log(`Loaded ${data.length} subtasks for task ${task.task_id}:`, data);
+      setSubtasks(data);
+    } catch (error) {
+      console.error('Error loading subtasks:', error);
+    } finally {
+      setLoadingSubtasks(false);
+    }
+  };
+
+  const handleToggleSubtask = async (subtaskId) => {
+    try {
+      await taskService.toggleSubtask(subtaskId);
+      loadSubtasks(); // Reload to get updated state
+    } catch (error) {
+      console.error('Error toggling subtask:', error);
+    }
+  };
+
+  const getSubtaskProgress = () => {
+    if (subtasks.length === 0) return null;
+    const completed = subtasks.filter(st => st.completed).length;
+    return `${completed}/${subtasks.length}`;
+  };
+
   return (
     <div className="task-card">
       <div className="task-urgency-indicator" style={{ backgroundColor: getUrgencyColor() }}></div>
@@ -142,6 +185,31 @@ function TaskItem({ task, onComplete, onDelete, onUpdate }) {
 
       {task.details && (
         <p className="task-card-description">{task.details}</p>
+      )}
+
+      {showSubtasks && (
+        <div className="subtasks-display">
+          {loadingSubtasks ? (
+            <div className="subtasks-loading">Loading subtasks...</div>
+          ) : subtasks.length > 0 ? (
+            <ul className="subtasks-list">
+              {subtasks.map(subtask => (
+                <li key={subtask.subtask_id} className={`subtask ${subtask.completed ? 'completed' : ''}`}>
+                  <label className="subtask-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={subtask.completed}
+                      onChange={() => handleToggleSubtask(subtask.subtask_id)}
+                    />
+                    <span className="subtask-title">{subtask.title}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="no-subtasks">No subtasks for this task</div>
+          )}
+        </div>
       )}
 
       <div className="task-card-meta">
@@ -178,6 +246,14 @@ function TaskItem({ task, onComplete, onDelete, onUpdate }) {
       )}
 
       <div className="task-card-actions">
+        {subtasks.length > 0 && (
+          <button
+            onClick={() => setShowSubtasks(!showSubtasks)}
+            className="task-btn task-btn-subtasks"
+          >
+            {showSubtasks ? '▼' : '▶'} Subtasks {getSubtaskProgress()}
+          </button>
+        )}
         <button 
           onClick={() => onComplete(task.task_id)} 
           className="task-btn task-btn-complete"

@@ -20,7 +20,7 @@ function Today() {
   const fetchTodayStats = async () => {
     try {
       const response = await api.get('/tasks');
-      const tasks = response.data;
+      const tasks = response.data.tasks || response.data;
       
       const today = new Date();
       today.setHours(0, 0, 0, 0);

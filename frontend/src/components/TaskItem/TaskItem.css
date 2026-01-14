@@ -367,3 +367,99 @@
     width: 100%;
   }
 }
+
+/* Subtasks Display */
+.subtasks-display {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  margin-top: 1rem;
+}
+
+.subtasks-loading {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
+}
+
+.no-subtasks {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
+  font-style: italic;
+}
+
+.subtasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subtask {
+  margin-bottom: 0.75rem;
+}
+
+.subtask:last-child {
+  margin-bottom: 0;
+}
+
+.subtask-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.subtask-checkbox-label:hover {
+  background-color: var(--hover-bg);
+}
+
+.subtask-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.subtask-title {
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.subtask.completed .subtask-title {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.task-btn-subtasks {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.task-btn-subtasks:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a4291 100%);
+}
+
+@media (max-width: 768px) {
+  .subtasks-display {
+    padding: 0.75rem;
+  }
+
+  .subtask-checkbox-label {
+    padding: 0.4rem;
+    gap: 0.5rem;
+  }
+
+  .subtask-checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .subtask-title {
+    font-size: 0.9rem;
+  }
+}

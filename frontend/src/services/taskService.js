@@ -65,6 +65,37 @@ const taskService = {
   deleteTask: async (taskId) => {
     const response = await api.delete(`/tasks/${taskId}`);
     return response.data;
+  },
+
+  // Subtask operations
+  getSubtasks: async (taskId) => {
+    const response = await api.get(`/subtasks/task/${taskId}`);
+    return response.data;
+  },
+
+  createSubtask: async (taskId, subtaskData) => {
+    const response = await api.post(`/subtasks/task/${taskId}`, subtaskData);
+    return response.data;
+  },
+
+  toggleSubtask: async (subtaskId) => {
+    const response = await api.patch(`/subtasks/${subtaskId}/toggle`);
+    return response.data;
+  },
+
+  updateSubtask: async (subtaskId, title) => {
+    const response = await api.put(`/subtasks/${subtaskId}`, { title });
+    return response.data;
+  },
+
+  deleteSubtask: async (subtaskId) => {
+    const response = await api.delete(`/subtasks/${subtaskId}`);
+    return response.data;
+  },
+
+  getSubtaskStats: async (taskId) => {
+    const response = await api.get(`/subtasks/task/${taskId}/stats`);
+    return response.data;
   }
 };
 
